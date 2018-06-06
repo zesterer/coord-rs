@@ -1,6 +1,8 @@
 [package]
 name = "coord"
 version = "0.1.0"
+description = "A simple, intuitive vector mathematics library"
+license = "MIT/Apache-2.0"
 authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
 
 [dependencies]
