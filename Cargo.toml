@@ -1,11 +1,13 @@
 [package]
 name = "coord"
 version = "0.1.0"
+authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
 description = "A simple, intuitive vector mathematics crate"
 license = "MIT/Apache-2.0"
-authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
 readme = "README.md"
-keywords = ["simple", "vector", "mathematics"]
 maintenance = { status = "experimental" }
+homepage = "https://github.com/zesterer/coord-rs"
+repository = "https://github.com/zesterer/coord-rs"
+keywords = ["simple", "vector", "mathematics"]
 
 [dependencies]
