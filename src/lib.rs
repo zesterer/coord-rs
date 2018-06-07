@@ -1,4 +1,4 @@
-extern crate core;
+#![no_std]
 
 mod vec1;
 mod vec2;
