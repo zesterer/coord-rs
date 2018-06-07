@@ -1,17 +1,27 @@
 #![no_std]
 
-mod vec1;
-mod vec2;
-mod vec3;
-mod vec4;
+extern crate num;
+
+pub mod vec1;
+pub mod vec2;
+pub mod vec3;
+pub mod vec4;
+pub mod math;
+#[macro_use]
+pub mod macros;
 
 // Reexports
 pub use vec1::Vec1;
 pub use vec2::Vec2;
 pub use vec3::Vec3;
 pub use vec4::Vec4;
+pub use math::{VecNum, VecInt, VecUnsigned, VecSigned, VecFloat, VecItemNum, VecItemInt, VecItemUnsigned, VecItemSigned, VecItemFloat};
 
 pub trait VecItem: Copy + Clone + PartialEq {}
+
+pub trait Vec {
+    type Item: VecItem;
+}
 
 impl VecItem for u8 {}
 impl VecItem for u16 {}
@@ -69,9 +79,51 @@ pub mod prelude {
 mod tests {
     use super::prelude::*;
 
-    // TODO
-    // #[test]
-    // fn test() {
-    //     // Nothing yet
-    // }
+    #[test]
+    fn basic_construction() {
+        let _ = Vec1::new(1u32);
+        let _ = Vec2::new(1u32, 2u32);
+        let _ = Vec3::new(1u32, 2u32, 3u32);
+        let _ = Vec4::new(1u32, 2u32, 3u32, 4u32);
+
+        let _ = Vec2::from((1u32, 2u32));
+        let _ = Vec3::from((1u32, 2u32, 3u32));
+        let _ = Vec4::from((1u32, 2u32, 3u32, 4u32));
+    }
+
+    #[test]
+    fn basic_operators() {
+        let _ = Vec1u::new(0)          + Vec1u::new(3);
+        let _ = Vec2u::new(0, 1)       + Vec2u::new(3, 2);
+        let _ = Vec3u::new(0, 1, 2)    + Vec3u::new(3, 2, 1);
+        let _ = Vec4u::new(0, 1, 2, 3) + Vec4u::new(3, 2, 1, 0);
+
+        let _ = Vec1u::new(3)          - Vec1u::new(3);
+        let _ = Vec2u::new(3, 2)       - Vec2u::new(3, 2);
+        let _ = Vec3u::new(3, 2, 1)    - Vec3u::new(3, 2, 1);
+        let _ = Vec4u::new(3, 2, 1, 0) - Vec4u::new(3, 2, 1, 0);
+
+        let _ = Vec1u::new(1)          * Vec1u::new(4);
+        let _ = Vec2u::new(1, 2)       * Vec2u::new(4, 3);
+        let _ = Vec3u::new(1, 2, 3)    * Vec3u::new(4, 3, 2);
+        let _ = Vec4u::new(1, 2, 3, 4) * Vec4u::new(4, 3, 2, 1);
+
+        let _ = Vec1u::new(4)          / Vec1u::new(5);
+        let _ = Vec2u::new(4, 3)       / Vec2u::new(5, 4);
+        let _ = Vec3u::new(4, 3, 2)    / Vec3u::new(5, 4, 3);
+        let _ = Vec4u::new(4, 3, 2, 1) / Vec4u::new(5, 4, 3, 2);
+    }
+
+    fn pass_vec1u(_: Vec1u) {}
+    fn pass_vec2u(_: Vec2u) {}
+    fn pass_vec3u(_: Vec3u) {}
+    fn pass_vec4u(_: Vec4u) {}
+
+    #[test]
+    fn test_pass() {
+        pass_vec1u(vec!(1u32));
+        pass_vec2u(vec!(1u32, 2u32));
+        pass_vec3u(vec!(1u32, 2u32, 3u32));
+        pass_vec4u(vec!(1u32, 2u32, 3u32, 4u32));
+    }
 }
