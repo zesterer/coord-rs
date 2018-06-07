@@ -1,5 +1,6 @@
 use core::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use super::{Vec, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat, VecItemNum, VecItemInt, VecItemUnsigned, VecItemSigned, VecItemFloat};
+use num::{Num, Integer, Unsigned, Signed, Float};
+use super::{Vec, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vec4<T: VecItem> {
@@ -125,7 +126,7 @@ impl<T> DivAssign for Vec4<T> where T: VecItem + Div<Output=T> {
 
 // VecNum traits
 
-impl<T> VecNum for Vec4<T> where T: VecItemNum {
+impl<T> VecNum for Vec4<T> where T: VecItem + Num {
     fn sum(&self) -> Self::Item {
         self.x + self.y + self.z + self.w
     }
@@ -137,7 +138,7 @@ impl<T> VecNum for Vec4<T> where T: VecItemNum {
 
 // VecSigned traits
 
-impl<T> VecSigned for Vec4<T> where T: VecItemSigned {
+impl<T> VecSigned for Vec4<T> where T: VecItem + Signed {
     fn snake_length(&self) -> Self::Item {
         self.x.abs() + self.y.abs() + self.z.abs() + self.w.abs()
     }
@@ -145,7 +146,7 @@ impl<T> VecSigned for Vec4<T> where T: VecItemSigned {
 
 // VecFloat traits
 
-impl<T> VecFloat for Vec4<T> where T: VecItemFloat {
+impl<T> VecFloat for Vec4<T> where T: VecItem + Float {
     fn length(&self) -> Self::Item {
         (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt()
     }

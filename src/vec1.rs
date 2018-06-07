@@ -1,5 +1,6 @@
 use core::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use super::{Vec, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat, VecItemNum, VecItemInt, VecItemUnsigned, VecItemSigned, VecItemFloat};
+use num::{Num, Integer, Unsigned, Signed, Float};
+use super::{Vec, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
 #[derive(Copy, Clone, Debug)]
 pub struct Vec1<T: VecItem> {
@@ -26,7 +27,7 @@ impl<T: VecItem> From<[T; 1]> for Vec1<T> {
 
 // Op traits
 
-impl<T> Add for Vec1<T> where T: VecItem + Add, T::Output: VecItem + Add + Copy {
+impl<T> Add for Vec1<T> where T: VecItem + Add, T::Output: VecItem + Add {
     type Output = Vec1<T::Output>;
     fn add(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
@@ -35,7 +36,7 @@ impl<T> Add for Vec1<T> where T: VecItem + Add, T::Output: VecItem + Add + Copy 
     }
 }
 
-impl<T> Sub for Vec1<T> where T: VecItem + Sub, T::Output: VecItem + Sub + Copy {
+impl<T> Sub for Vec1<T> where T: VecItem + Sub, T::Output: VecItem + Sub {
     type Output = Vec1<T::Output>;
     fn sub(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
@@ -44,7 +45,7 @@ impl<T> Sub for Vec1<T> where T: VecItem + Sub, T::Output: VecItem + Sub + Copy 
     }
 }
 
-impl<T> Mul for Vec1<T> where T: VecItem + Mul, T::Output: VecItem + Mul + Copy {
+impl<T> Mul for Vec1<T> where T: VecItem + Mul, T::Output: VecItem + Mul {
     type Output = Vec1<T::Output>;
     fn mul(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
@@ -53,7 +54,7 @@ impl<T> Mul for Vec1<T> where T: VecItem + Mul, T::Output: VecItem + Mul + Copy 
     }
 }
 
-impl<T> Div for Vec1<T> where T: VecItem + Div, T::Output: VecItem + Div + Copy {
+impl<T> Div for Vec1<T> where T: VecItem + Div, T::Output: VecItem + Div {
     type Output = Vec1<T::Output>;
     fn div(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
@@ -98,7 +99,7 @@ impl<T> DivAssign for Vec1<T> where T: VecItem + Div<Output=T> {
 
 // VecNum traits
 
-impl<T> VecNum for Vec1<T> where T: VecItemNum {
+impl<T> VecNum for Vec1<T> where T: VecItem + Num {
     fn sum(&self) -> Self::Item {
         self.x
     }
@@ -110,7 +111,7 @@ impl<T> VecNum for Vec1<T> where T: VecItemNum {
 
 // VecSigned traits
 
-impl<T> VecSigned for Vec1<T> where T: VecItemSigned {
+impl<T> VecSigned for Vec1<T> where T: VecItem + Signed {
     fn snake_length(&self) -> Self::Item {
         self.x.abs()
     }
@@ -118,7 +119,7 @@ impl<T> VecSigned for Vec1<T> where T: VecItemSigned {
 
 // VecFloat traits
 
-impl<T> VecFloat for Vec1<T> where T: VecItemFloat {
+impl<T> VecFloat for Vec1<T> where T: VecItem + Float {
     fn length(&self) -> Self::Item {
         self.x
     }
