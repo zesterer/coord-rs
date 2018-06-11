@@ -87,7 +87,7 @@ pub mod prelude {
     pub use super::Vec3;
     pub use super::Vec4;
 
-    pub use super::Vec;
+    pub use super::Vec as Vector;
     pub use super::VecNum;
     pub use super::VecInt;
     pub use super::VecUnsigned;
