@@ -1,5 +1,7 @@
 # <img src="https://imgur.com/qcUMer7.png" alt="Coord" width="32px"/> Coord
 
+[![Build Status][ci-badge]][ci] [![Crates.io][cr-badge]][cr] ![Downloads][dl-badge] [![Docs][doc-badge]][doc]
+
 [ci-badge]: https://travis-ci.org/zesterer/coord-rs.svg?branch=master
 [ci]: https://travis-ci.org/zesterer/coord-rs
 [cr-badge]: https://img.shields.io/crates/v/coord.svg
