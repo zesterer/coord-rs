@@ -1,6 +1,6 @@
 [package]
 name = "coord"
-version = "0.6.1"
+version = "0.7.0"
 authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
 description = "A simple, ergonomic vector mathematics crate"
 license = "MIT"
@@ -8,12 +8,14 @@ readme = "README.md"
 maintenance = { status = "experimental" }
 homepage = "https://github.com/zesterer/coord-rs"
 repository = "https://github.com/zesterer/coord-rs"
-keywords = ["simple", "vector", "mathematics"]
+keywords = ["simple", "vector", "mathematics", "no_std"]
 
 [dependencies]
 num = "0.1"
-serde = "1.0"
-serde_derive = "1.0"
+
+serde = { version = "1.0", optional = true }
+serde_derive = { version = "1.0", optional = true }
 
 [features]
 large_defaults = []
+serialize = ["serde", "serde_derive"]

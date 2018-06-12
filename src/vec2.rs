@@ -3,10 +3,23 @@
 use core::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use core::marker::PhantomData;
 use core::fmt;
+
+#[allow(unused_imports)]
 use num::{Num, Integer, Unsigned, Signed, Float};
+
+#[allow(unused_imports)]
 use super::{Vector, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
-#[derive(Copy, Clone)]
+#[cfg(feature = "serialize")]
+#[derive(Copy, Clone, Default, Serialize)]
+pub struct Vec2<'a, T: 'a + VecItem<'a>> {
+    pub x: T,
+    pub y: T,
+    phantom: PhantomData<&'a T>,
+}
+
+#[cfg(not(feature = "serialize"))]
+#[derive(Copy, Clone, Default)]
 pub struct Vec2<'a, T: 'a + VecItem<'a>> {
     pub x: T,
     pub y: T,
@@ -14,7 +27,7 @@ pub struct Vec2<'a, T: 'a + VecItem<'a>> {
 }
 
 impl<'a, T: VecItem<'a>> Vec2<'a, T> {
-    pub fn new(x: T, y: T) -> Self { Self { x, y, phantom: PhantomData } }
+    pub fn new(x: T, y: T) -> Self { Self { x, y, ..Default::default() } }
 }
 
 impl<'a, T: VecItem<'a>> Vector<'a> for Vec2<'a, T> {
@@ -38,11 +51,11 @@ impl<'a, T: VecItem<'a> + fmt::Display> fmt::Display for Vec2<'a, T> {
 // From traits
 
 impl<'a, T: VecItem<'a>> From<[T; 2]> for Vec2<'a, T> {
-    fn from(arr: [T; 2]) -> Self { Self { x: arr[0], y: arr[1], phantom: PhantomData } }
+    fn from(arr: [T; 2]) -> Self { Self { x: arr[0], y: arr[1], ..Default::default() } }
 }
 
 impl<'a, T: VecItem<'a>> From<(T, T)> for Vec2<'a, T> {
-    fn from(tup: (T, T)) -> Self { Self { x: tup.0, y: tup.1, phantom: PhantomData } }
+    fn from(tup: (T, T)) -> Self { Self { x: tup.0, y: tup.1, ..Default::default() } }
 }
 
 // Op traits
@@ -53,7 +66,7 @@ impl<'a, T> Add for Vec2<'a, T> where T: VecItem<'a> + Add, T::Output: VecItem<'
         Vec2 {
             x: self.x + other.x,
             y: self.y + other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -64,7 +77,7 @@ impl<'a, T> Sub for Vec2<'a, T> where T: VecItem<'a> + Sub, T::Output: VecItem<'
         Vec2 {
             x: self.x - other.x,
             y: self.y - other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -75,7 +88,7 @@ impl<'a, T> Mul for Vec2<'a, T> where T: VecItem<'a> + Mul, T::Output: VecItem<'
         Vec2 {
             x: self.x * other.x,
             y: self.y * other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -86,7 +99,7 @@ impl<'a, T> Div for Vec2<'a, T> where T: VecItem<'a> + Div, T::Output: VecItem<'
         Vec2 {
             x: self.x / other.x,
             y: self.y / other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -99,7 +112,7 @@ impl<'a, T> Add<T> for Vec2<'a, T> where T: VecItem<'a> + Add, T::Output: VecIte
         Vec2 {
             x: self.x + other,
             y: self.y + other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -110,7 +123,7 @@ impl<'a, T> Sub<T> for Vec2<'a, T> where T: VecItem<'a> + Sub, T::Output: VecIte
         Vec2 {
             x: self.x - other,
             y: self.y - other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -121,7 +134,7 @@ impl<'a, T> Mul<T> for Vec2<'a, T> where T: VecItem<'a> + Mul, T::Output: VecIte
         Vec2 {
             x: self.x * other,
             y: self.y * other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -132,7 +145,7 @@ impl<'a, T> Div<T> for Vec2<'a, T> where T: VecItem<'a> + Div, T::Output: VecIte
         Vec2 {
             x: self.x / other,
             y: self.y / other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -144,7 +157,7 @@ impl<'a, T> AddAssign for Vec2<'a, T> where T: VecItem<'a> + Add<Output=T> {
         *self = Vec2 {
             x: self.x + other.x,
             y: self.y + other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -154,7 +167,7 @@ impl<'a, T> SubAssign for Vec2<'a, T> where T: VecItem<'a> + Sub<Output=T> {
         *self = Vec2 {
             x: self.x - other.x,
             y: self.y - other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -164,7 +177,7 @@ impl<'a, T> MulAssign for Vec2<'a, T> where T: VecItem<'a> + Mul<Output=T> {
         *self = Vec2 {
             x: self.x * other.x,
             y: self.y * other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -174,7 +187,7 @@ impl<'a, T> DivAssign for Vec2<'a, T> where T: VecItem<'a> + Div<Output=T> {
         *self = Vec2 {
             x: self.x / other.x,
             y: self.y / other.y,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -186,7 +199,7 @@ impl<'a, T> AddAssign<T> for Vec2<'a, T> where T: VecItem<'a> + Add<Output=T> {
         *self = Vec2 {
             x: self.x + other,
             y: self.y + other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -196,7 +209,7 @@ impl<'a, T> SubAssign<T> for Vec2<'a, T> where T: VecItem<'a> + Sub<Output=T> {
         *self = Vec2 {
             x: self.x - other,
             y: self.y - other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -206,7 +219,7 @@ impl<'a, T> MulAssign<T> for Vec2<'a, T> where T: VecItem<'a> + Mul<Output=T> {
         *self = Vec2 {
             x: self.x * other,
             y: self.y * other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }
@@ -216,7 +229,7 @@ impl<'a, T> DivAssign<T> for Vec2<'a, T> where T: VecItem<'a> + Div<Output=T> {
         *self = Vec2 {
             x: self.x / other,
             y: self.y / other,
-            phantom: PhantomData,
+            ..Default::default()
         }
     }
 }

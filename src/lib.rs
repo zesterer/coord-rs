@@ -46,8 +46,10 @@
 #![no_std]
 
 extern crate num;
+#[cfg(feature = "serialize")]
 #[macro_use]
 extern crate serde_derive;
+#[cfg(feature = "serialize")]
 extern crate serde;
 
 pub mod vec1;
@@ -59,12 +61,15 @@ pub mod math;
 pub mod macros;
 
 use math::{VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
-use num::{Num, Integer, Unsigned, Signed, Float};
 
+#[cfg(feature = "serialize")]
 use serde::{Serialize, Deserialize};
 
 /// A trait implemented by all types that can exist within a vector
-pub trait VecItem<'a>: Copy + Clone + PartialEq + Serialize + Deserialize<'a> {}
+#[cfg(feature = "serialize")]
+pub trait VecItem<'a>: Copy + Clone + Default + PartialEq + Serialize + Deserialize<'a> {}
+#[cfg(not(feature = "serialize"))]
+pub trait VecItem<'a>: Copy + Clone + Default + PartialEq {}
 
 /// A trait implemented by all vector types
 pub trait Vector<'a> {
@@ -331,10 +336,10 @@ mod tests {
 
     #[test]
     fn pass_to_func() {
-        pass_vec1u(vec1!(1u32));
-        pass_vec2u(vec2!(1u32, 2u32));
-        pass_vec3u(vec3!(1u32, 2u32, 3u32));
-        pass_vec4u(vec4!(1u32, 2u32, 3u32, 4u32));
+        pass_vec1u(vec1!(1));
+        pass_vec2u(vec2!(1, 2));
+        pass_vec3u(vec3!(1, 2, 3));
+        pass_vec4u(vec4!(1, 2, 3, 4));
     }
 
     fn length_of<'a, V: VecFloat<'a>>(vec: V) -> V::Item where V::Item: math::Float {

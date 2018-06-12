@@ -3,3 +3,4 @@ rust:
   - stable
 script:
   - cargo test -v
+  - cargo test -v --all-features
