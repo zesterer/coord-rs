@@ -53,6 +53,8 @@ fn main() {
 - [x] `VecXu`, `VecXi` and `VecXf` default type definitions
 - [x] Basic mathematic operations (`Add`, `Sub`, `Mul`, `Div`)
 - [x] Mathematic functions (i.e: `.length()`, `.normalize()`, etc.)
+- [x] Serialization support with the `serialize` feature
+- [x] 64 bit default type support with the `large_defaults` feature
 
 ## Coming Soon
 
@@ -68,12 +70,12 @@ To use Coord in your Rust project, add the following line beneath the `[dependen
 coord = "0.7.0"
 ```
 
-If you want to enable 64-bit defaults (i.e: types like `Vec3i` contains `i64` instead of `i32`), you should specify the dependency like the following line instead.
+If you want to enable serialization or 64-bit defaults, you should specify the dependency like the following line instead.
 
 ```
 [dependencies.coord]
 version = "0.7.0"
-features = ["large_defaults"]
+features = ["serialize", "large_defaults"]
 ```
 
 ## FAQ
@@ -87,6 +89,10 @@ Coord came about as a result of a general dissatisfaction with existing vector m
 Coord does not aim to be a fully-blown N-dimensional mathematics library. It aims to implement a small yet elegant set of features that make it suitable for applications where simple multi-variable mathematics is required.
 
 If you think feature X falls within that scope, and is not yet on the project todo list, you can open an issue on GitHub and I'll consider implementing it.
+
+### Why does Coord choose 32 bit values for its default types?
+
+Coord defines a set of 'default' types within the `defaults` module. They are included within the `prelude` module too. These default types, such as `Vec2f`, `Vec3u`, `Vec4b`, etc. exist to make writing code with Coord faster. It is still possible to program without them like `Vec2<f32>`, `Vec3<u32>`, `Vec4<bool>`, etc. Coord chooses 32-bit types by default because it is my belief that these are more useful when developing for games and physics engines, which require fast calculations. Additionally, 32 bit floating point types means that Coord is compatible with OpenGL.
 
 ### Why does Coord not have a general-purpose `vec!` macro?
 
