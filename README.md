@@ -1,12 +1,8 @@
 # <img src="https://imgur.com/qcUMer7.png" alt="Coord" width="32px"/> Coord
 
----
-
 Coord is a simple, ergonomic vector mathematics crate for Rust designed for use in game development, physics engines and other programs that deal with general-purpose multi-variable mathematics.
 
 **NOTICE: Coord is now `no_std` compatible!**
-
----
 
 ## Example
 
@@ -49,7 +45,7 @@ fn main() {
 
 ### Why does Coord exist?
 
-Coord came about as a result of a general dissatisfaction with existing vector mathematics libraries during development of the (Veloren Project)[https://github.com/veloren/game]. Existing solutions were either too complicated, too awkward to use, or required too many dependencies.
+Coord came about as a result of a general dissatisfaction with existing vector mathematics libraries during development of the [Veloren Project](https://github.com/veloren/game). Existing solutions were either too complicated, awkward to use, or required too many dependencies.
 
 ### Does Coord aim to eventually implement feature X?
 
@@ -67,8 +63,10 @@ It doesn't need to. Why limit the use cases of the library by requiring `std`?
 
 ### Bug! Bug! I've found a bug!
 
-Open an issue on Github ((https://github.com/zesterer/coord-rs)[https://github.com/zesterer/coord-rs) and I'll fix it as soon as possible.
+Open an issue on Github and I'll fix it as soon as possible.
+
+[You can open an issue here](https://github.com/zesterer/coord-rs/issues/new)
 
 ## License
 
-Coord is open source software, licensed under the MIT license (LICENSE-MIT or (http://opensource.org/licenses/MIT)[http://opensource.org/licenses/MIT])
+Coord is open source software, licensed under the MIT license (LICENSE-MIT or [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT))
