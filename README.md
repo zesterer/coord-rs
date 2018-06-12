@@ -1,8 +1,12 @@
+![Coord](https://imgur.com/qcUMer7.png)
+
 # Coord
 
 ---
 
-Coord is a simple, intuitive vector mathematics library for Rust.
+Coord is a simple, ergonomic vector mathematics crate for Rust designed for use in game development, physics engines and other programs that deal with general-purpose multi-variable mathematics.
+
+**NOTICE: Coord is now `no_std` compatible!**
 
 ---
 
@@ -11,26 +15,62 @@ Coord is a simple, intuitive vector mathematics library for Rust.
 ```
 #[macro_use]
 extern crate coord;
-
 use coord::prelude::*;
 
-fn length_of<V: VecFloat>(vec: V) -> V::Item where V::Item: Float {
-	vec.length()
-}
-
 fn main() {
-	let v2 = vec2!(1, 2) + vec2!(2, 1);
-	println!("{:?}", v2);
+	// Coord supports 4 multi-variable vector types: Vec1, Vec2, Vec3 and Vec4
+	let mut v = vec3!(1.0, 2.5, 3.0);
 
-	let v3 = vec3!(1.5, 2.0, 6.5) * vec3!(3.2, 7.7, 8.2);
-	println!("{:?}", v3.length());
-}
+	// Coord supports common mathematical operations for both primitive and vector types
+	v += vec3![1.0; 3] * 5.0;
+	let _ = v * vec3!([10.0, 10.0, 10.0]);
+
+	// Coord implements many common mathematic functions
+	let _ = v.length();
+	let _ = v.normalize();
+
+	// Coord supports debug and display printing of vectors
+	println!("Debug => {:?}", v);
+	println!("Display => {}", v);
+
+	// Coord allows arbitrary vector component types
+	let _ = vec2!(true, false); // Create a boolean vector
+	}
 ```
 
 ## Features
 
 - [x] Generic `Vec1`, `Vec2`, `Vec3` and `Vec4` types
 - [x] `VecXu`, `VecXi` and `VecXf` type definitions
-- [x] Implementation of basic mathematics operations (`Add`, `Sub`, `Mul`, `Div`)
-- [ ] Implementation of mathematics functions (i.e: `.length()`, `.cross(v)`, etc.)
-- [ ] Implementation of bitwise operations
+- [x] Utility macros to make vector manipulation simpler
+- [x] Basic mathematic operations (`Add`, `Sub`, `Mul`, `Div`)
+- [x] Mathematic functions (i.e: `.length()`, `.normalize()`, etc.)
+- [ ] Bitwise operations
+
+## FAQ
+
+### Why does Coord exist?
+
+Coord came about as a result of a general dissatisfaction with existing vector mathematics libraries during development of the (Veloren Project)[https://github.com/veloren/game]. Existing solutions were either too complicated, too awkward to use, or required too many dependencies.
+
+### Does Coord aim to eventually implement feature X?
+
+Coord does not aim to be a fully-blown N-dimensional mathematics library. It aims to implement a small yet elegant set of features that make it suitable for applications where simple multi-variable mathematics is required.
+
+If you think feature X falls within that scope, and is not yet on the project todo list, you can open an issue on GitHub and I'll consider implementing it.
+
+### Why does Coord not have a general-purpose `vec!` macro?
+
+Such a macro would conflict with the `vec!` macro within Rust's standard library.
+
+### Why does Coord not rely on the standard library?
+
+It doesn't need to. Why limit the use cases of the library by requiring `std`?
+
+### Bug! Bug! I've found a bug!
+
+Open an issue on Github ((https://github.com/zesterer/coord-rs)[https://github.com/zesterer/coord-rs) and I'll fix it as soon as possible.
+
+## License
+
+Coord is open source software, licensed under the MIT license (LICENSE-MIT or (http://opensource.org/licenses/MIT)[http://opensource.org/licenses/MIT])

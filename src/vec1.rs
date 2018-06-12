@@ -1,9 +1,12 @@
+//! Functionality pertaining to `Vec1`
+
 use core::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use core::marker::PhantomData;
+use core::fmt;
 use num::{Num, Integer, Unsigned, Signed, Float};
 use super::{Vector, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 pub struct Vec1<'a, T: 'a + VecItem<'a>> {
     pub x: T,
     phantom: PhantomData<&'a T>,
@@ -15,6 +18,20 @@ impl<'a, T: VecItem<'a>> Vec1<'a, T> {
 
 impl<'a, T: VecItem<'a>> Vector<'a> for Vec1<'a, T> {
     type Item = T;
+}
+
+// Debug and Display traits
+
+impl<'a, T: VecItem<'a> + fmt::Debug> fmt::Debug for Vec1<'a, T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "(x: {:?})", self.x)
+    }
+}
+
+impl<'a, T: VecItem<'a> + fmt::Display> fmt::Display for Vec1<'a, T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({})", self.x)
+    }
 }
 
 // From traits
@@ -212,5 +229,11 @@ impl<'a, T> VecSigned<'a> for Vec1<'a, T> where T: VecItem<'a> + Signed {
 impl<'a, T> VecFloat<'a> for Vec1<'a, T> where T: VecItem<'a> + Float {
     fn length(&self) -> Self::Item {
         self.x
+    }
+
+    fn normalize(&self) -> Self {
+        Vec1::new(
+            self.x,
+        )
     }
 }

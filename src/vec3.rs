@@ -1,9 +1,12 @@
+//! Functionality pertaining to `Vec3`
+
 use core::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
 use core::marker::PhantomData;
+use core::fmt;
 use num::{Num, Integer, Unsigned, Signed, Float};
 use super::{Vector, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
-#[derive(Copy, Clone, Debug)]
+#[derive(Copy, Clone)]
 pub struct Vec3<'a, T: 'a + VecItem<'a>> {
     pub x: T,
     pub y: T,
@@ -17,6 +20,20 @@ impl<'a, T: VecItem<'a>> Vec3<'a, T> {
 
 impl<'a, T: VecItem<'a>> Vector<'a> for Vec3<'a, T> {
     type Item = T;
+}
+
+// Debug and Display traits
+
+impl<'a, T: VecItem<'a> + fmt::Debug> fmt::Debug for Vec3<'a, T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "(x: {:?}, y: {:?}, z: {:?})", self.x, self.y, self.z)
+    }
+}
+
+impl<'a, T: VecItem<'a> + fmt::Display> fmt::Display for Vec3<'a, T> {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        write!(f, "({}, {}, {})", self.x, self.y, self.z)
+    }
 }
 
 // From traits
@@ -246,5 +263,14 @@ impl<'a, T> VecSigned<'a> for Vec3<'a, T> where T: VecItem<'a> + Signed {
 impl<'a, T> VecFloat<'a> for Vec3<'a, T> where T: VecItem<'a> + Float {
     fn length(&self) -> Self::Item {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
+    }
+
+    fn normalize(&self) -> Self {
+        let len = self.length();
+        Vec3::new(
+            self.x / len,
+            self.y / len,
+            self.z / len,
+        )
     }
 }

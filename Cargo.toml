@@ -1,9 +1,9 @@
 [package]
 name = "coord"
-version = "0.6.0"
+version = "0.7.0"
 authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
 description = "A simple, intuitive vector mathematics crate"
-license = "MIT/Apache-2.0"
+license = "MIT"
 readme = "README.md"
 maintenance = { status = "experimental" }
 homepage = "https://github.com/zesterer/coord-rs"

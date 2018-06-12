@@ -1,3 +1,7 @@
+//! Macro definitions
+
+/// Neatly construct a `Vec1` from arbitrary components
+///
 /// # Examples
 ///
 /// ```
@@ -25,6 +29,8 @@ macro_rules! vec1 {
     );
 }
 
+/// Neatly construct a `Vec2` from arbitrary components
+///
 /// # Examples
 ///
 /// ```
@@ -52,6 +58,8 @@ macro_rules! vec2 {
     );
 }
 
+/// Neatly construct a `Vec3` from arbitrary components
+///
 /// # Examples
 ///
 /// ```
@@ -79,6 +87,8 @@ macro_rules! vec3 {
     );
 }
 
+/// Neatly construct a `Vec4` from arbitrary components
+///
 /// # Examples
 ///
 /// ```

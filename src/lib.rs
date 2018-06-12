@@ -1,26 +1,45 @@
-//! `coord` is a simple, ergonomic vector mathematics crate designed for use in game development, physics engines and other programs that deal with general-purpose multi-variable mathematics
+//! `coord` is a simple, ergonomic vector mathematics crate for Rust designed for use in game development, physics engines and other programs that deal with general-purpose multi-variable mathematics
 //!
 //! # Features
 //!
-//! - Support for basic vector operations
-//! - Support for basic primitive operations
-//! - Basic mathematical operations upon vectors
+//! - Basic vector operations
+//! - Basic primitive operations
+//! - Basic mathematic operations upon vectors
+//! - Macros that make manipulating vectors simpler
 //! - Vector serialization
+//!
+//! # Coming Soon
+//!
+//! - Bitwise vector operations
+//! - More mathematic functions
+//! - Conversion between primitive vectors of different types
 //!
 //! # Examples
 //!
 //! ```
-//! #[macro_use] extern crate coord;
+//! #[macro_use]
+//! extern crate coord;
 //! use coord::prelude::*;
 //!
 //! fn main() {
-//!     // Coord supports 4 multi-variable vector types: Vec1, Vec2, Vec3 and Vec4
-//!     let mut v0 = vec3!(1, 2, 3);
-//!     v0 += vec3![1; 3] * 5;
-//!     let _ = v0 * vec3!([10, 10, 10]);
+//! 	// Coord supports 4 multi-variable vector types: Vec1, Vec2, Vec3 and Vec4
+//! 	let mut v = vec3!(1.0, 2.5, 3.0);
 //!
-//!     // Coord allows arbitrary vector component types
-//!     let _ = vec2!(true, false); // Create a boolean vector
+//! 	// Coord supports common mathematical operations for both primitive and vector types
+//!     // The macros support multiple methods of construction including arrays and tuples
+//! 	v += vec3![1.0; 3] * 5.0;
+//! 	let _ = v * vec3!([10.0, 10.0, 10.0]);
+//!
+//! 	// Coord implements many common mathematic functions
+//! 	let _ = v.length();
+//! 	let _ = v.normalize();
+//!
+//! 	// Coord supports debug and display printing of vectors
+//! 	println!("Debug => {:?}", v);
+//! 	println!("Display => {:?}", v);
+//!
+//! 	// Coord allows arbitrary vector component types
+//! 	let _ = vec2!(true, false); // Create a boolean vector
 //! }
 //! ```
 
@@ -39,18 +58,15 @@ pub mod math;
 #[macro_use]
 pub mod macros;
 
-// Reexports
-pub use vec1::Vec1;
-pub use vec2::Vec2;
-pub use vec3::Vec3;
-pub use vec4::Vec4;
-pub use math::{VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
+use math::{VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 use num::{Num, Integer, Unsigned, Signed, Float};
 
 use serde::{Serialize, Deserialize};
 
+/// A trait implemented by all types that can exist within a vector
 pub trait VecItem<'a>: Copy + Clone + PartialEq + Serialize + Deserialize<'a> {}
 
+/// A trait implemented by all vector types
 pub trait Vector<'a> {
     type Item: VecItem<'a>;
 }
@@ -76,52 +92,90 @@ impl<'a> VecItem<'a> for f64 {}
 pub mod defaults {
     //! This module contains several type definitions that make working with `coord` simpler and faster
     //!
-    //! *The default size for numerical types is 32 bits*
+    //! *The default size for numerical types is 32 bits. To change this to 64 bits, enable the `large_defaults` feature*
 
     use super::*;
 
-    pub type Vec1b<'a> = Vec1<'a, bool>;
+    /// A 1-dimensional boolean vector type
+    pub type Vec1b<'a> = vec1::Vec1<'a, bool>;
+    /// A 2-dimensional boolean vector type
+    pub type Vec2b<'a> = vec2::Vec2<'a, bool>;
+    /// A 3-dimensional boolean vector type
+    pub type Vec3b<'a> = vec3::Vec3<'a, bool>;
+    /// A 4-dimensional boolean vector type
+    pub type Vec4b<'a> = vec4::Vec4<'a, bool>;
 
-    pub type Vec1u<'a> = Vec1<'a, u32>;
-    pub type Vec2u<'a> = Vec2<'a, u32>;
-    pub type Vec3u<'a> = Vec3<'a, u32>;
-    pub type Vec4u<'a> = Vec4<'a, u32>;
+    /// A 1-dimensional unsigned integer vector type
+    pub type Vec1u<'a> = vec1::Vec1<'a, u32>;
+    /// A 2-dimensional unsigned integer vector type
+    pub type Vec2u<'a> = vec2::Vec2<'a, u32>;
+    /// A 3-dimensional unsigned integer vector type
+    pub type Vec3u<'a> = vec3::Vec3<'a, u32>;
+    /// A 4-dimensional unsigned integer vector type
+    pub type Vec4u<'a> = vec4::Vec4<'a, u32>;
 
-    pub type Vec1i<'a> = Vec1<'a, i32>;
-    pub type Vec2i<'a> = Vec2<'a, i32>;
-    pub type Vec3i<'a> = Vec3<'a, i32>;
-    pub type Vec4i<'a> = Vec4<'a, i32>;
+    /// A 1-dimensional signed integer vector type
+    pub type Vec1i<'a> = vec1::Vec1<'a, i32>;
+    /// A 2-dimensional signed integer vector type
+    pub type Vec2i<'a> = vec2::Vec2<'a, i32>;
+    /// A 3-dimensional signed integer vector type
+    pub type Vec3i<'a> = vec3::Vec3<'a, i32>;
+    /// A 4-dimensional signed integer vector type
+    pub type Vec4i<'a> = vec4::Vec4<'a, i32>;
 
-    pub type Vec1f<'a> = Vec1<'a, f32>;
-    pub type Vec2f<'a> = Vec2<'a, f32>;
-    pub type Vec3f<'a> = Vec3<'a, f32>;
-    pub type Vec4f<'a> = Vec4<'a, f32>;
+    /// A 1-dimensional floating point vector type
+    pub type Vec1f<'a> = vec1::Vec1<'a, f32>;
+    /// A 2-dimensional floating point vector type
+    pub type Vec2f<'a> = vec2::Vec2<'a, f32>;
+    /// A 3-dimensional floating point vector type
+    pub type Vec3f<'a> = vec3::Vec3<'a, f32>;
+    /// A 4-dimensional floating point vector type
+    pub type Vec4f<'a> = vec4::Vec4<'a, f32>;
 }
 
 #[cfg(feature = "large_defaults")]
 pub mod defaults {
     //! This module contains several type definitions that make working with `coord` simpler and faster
     //!
-    //! *The default size for numerical types is 64 bits*
+    //! *The default size for numerical types is 64 bits. To change this to 32 bits, disable the `large_defaults` feature*
 
     use super::*;
 
-    pub type Vec1b<'a> = Vec1<'a, bool>;
+    /// A 1-dimensional boolean vector type
+    pub type Vec1b<'a> = vec1::Vec1<'a, bool>;
+    /// A 2-dimensional boolean vector type
+    pub type Vec2b<'a> = vec2::Vec2<'a, bool>;
+    /// A 3-dimensional boolean vector type
+    pub type Vec3b<'a> = vec3::Vec3<'a, bool>;
+    /// A 4-dimensional boolean vector type
+    pub type Vec4b<'a> = vec4::Vec4<'a, bool>;
 
-    pub type Vec1u<'a> = Vec1<'a, u64>;
-    pub type Vec2u<'a> = Vec2<'a, u64>;
-    pub type Vec3u<'a> = Vec3<'a, u64>;
-    pub type Vec4u<'a> = Vec4<'a, u64>;
+    /// A 1-dimensional unsigned integer vector type
+    pub type Vec1u<'a> = vec1::Vec1<'a, u64>;
+    /// A 2-dimensional unsigned integer vector type
+    pub type Vec2u<'a> = vec2::Vec2<'a, u64>;
+    /// A 3-dimensional unsigned integer vector type
+    pub type Vec3u<'a> = vec3::Vec3<'a, u64>;
+    /// A 4-dimensional unsigned integer vector type
+    pub type Vec4u<'a> = vec4::Vec4<'a, u64>;
 
-    pub type Vec1i<'a> = Vec1<'a, i64>;
-    pub type Vec2i<'a> = Vec2<'a, i64>;
-    pub type Vec3i<'a> = Vec3<'a, i64>;
-    pub type Vec4i<'a> = Vec4<'a, i64>;
+    /// A 1-dimensional signed integer vector type
+    pub type Vec1i<'a> = vec1::Vec1<'a, i64>;
+    /// A 2-dimensional signed integer vector type
+    pub type Vec2i<'a> = vec2::Vec2<'a, i64>;
+    /// A 3-dimensional signed integer vector type
+    pub type Vec3i<'a> = vec3::Vec3<'a, i64>;
+    /// A 4-dimensional signed integer vector type
+    pub type Vec4i<'a> = vec4::Vec4<'a, i64>;
 
-    pub type Vec1f<'a> = Vec1<'a, f64>;
-    pub type Vec2f<'a> = Vec2<'a, f64>;
-    pub type Vec3f<'a> = Vec3<'a, f64>;
-    pub type Vec4f<'a> = Vec4<'a, f64>;
+    /// A 1-dimensional floating point vector type
+    pub type Vec1f<'a> = vec1::Vec1<'a, f64>;
+    /// A 2-dimensional floating point vector type
+    pub type Vec2f<'a> = vec2::Vec2<'a, f64>;
+    /// A 3-dimensional floating point vector type
+    pub type Vec3f<'a> = vec3::Vec3<'a, f64>;
+    /// A 4-dimensional floating point vector type
+    pub type Vec4f<'a> = vec4::Vec4<'a, f64>;
 }
 
 pub mod prelude {
@@ -134,17 +188,20 @@ pub mod prelude {
     //! use coord::prelude::*;
     //! ```
 
-	pub use super::Vec1;
-    pub use super::Vec2;
-    pub use super::Vec3;
-    pub use super::Vec4;
+    pub use super::math;
 
     pub use super::Vector;
-    pub use super::VecNum;
-    pub use super::VecInt;
-    pub use super::VecUnsigned;
-    pub use super::VecSigned;
-    pub use super::VecFloat;
+
+    pub use super::vec1::Vec1;
+    pub use super::vec2::Vec2;
+    pub use super::vec3::Vec3;
+    pub use super::vec4::Vec4;
+
+    pub use math::VecNum;
+    pub use math::VecInt;
+    pub use math::VecUnsigned;
+    pub use math::VecSigned;
+    pub use math::VecFloat;
 
     pub use super::defaults::*;
 }
@@ -280,7 +337,7 @@ mod tests {
         pass_vec4u(vec4!(1u32, 2u32, 3u32, 4u32));
     }
 
-    fn length_of<'a, V: VecFloat<'a>>(vec: V) -> V::Item where V::Item: Float {
+    fn length_of<'a, V: VecFloat<'a>>(vec: V) -> V::Item where V::Item: math::Float {
         vec.length()
     }
 
