@@ -1,12 +1,22 @@
 # <img src="https://imgur.com/qcUMer7.png" alt="Coord" width="32px"/> Coord
 
+[ci-badge]: https://travis-ci.org/zesterer/coord-rs.svg?branch=master
+[ci]: https://travis-ci.org/zesterer/coord-rs
+[cr-badge]: https://img.shields.io/crates/v/coord.svg
+[cr]: https://crates.io/crates/coord
+[dl-badge]: https://img.shields.io/crates/d/coord.svg
+[doc-badge]: https://docs.rs/coord/badge.svg
+[doc]: https://docs.rs/coord
+
+## Description
+
 Coord is a simple, ergonomic vector mathematics crate for Rust designed for use in game development, physics engines and other programs that deal with general-purpose multi-variable mathematics.
 
-**NOTICE: Coord is now `no_std` compatible!**
+**Coord is now `no_std` compatible!**
 
 ## Example
 
-```
+```rust
 #[macro_use]
 extern crate coord;
 use coord::prelude::*;
@@ -29,17 +39,40 @@ fn main() {
 
 	// Coord allows arbitrary vector component types
 	let _ = vec2!(true, false); // Create a boolean vector
-	}
+}
 ```
+
+**For more examples, visit [https://docs.rs/coord](https://docs.rs/coord)**
 
 ## Features
 
 - [x] Generic `Vec1`, `Vec2`, `Vec3` and `Vec4` types
-- [x] `VecXu`, `VecXi` and `VecXf` type definitions
 - [x] Utility macros to make vector manipulation simpler
+- [x] `VecXu`, `VecXi` and `VecXf` default type definitions
 - [x] Basic mathematic operations (`Add`, `Sub`, `Mul`, `Div`)
 - [x] Mathematic functions (i.e: `.length()`, `.normalize()`, etc.)
+
+## Coming Soon
+
 - [ ] Bitwise operations
+- [ ] More mathematic functions
+- [ ] Modulo operator for integer vector types
+
+## Using Coord
+
+To use Coord in your Rust project, add the following line beneath the `[dependencies]` section in your `Cargo.toml` file.
+
+```
+coord = "0.7.0"
+```
+
+If you want to enable 64-bit defaults (i.e: types like `Vec3i` contains `i64` instead of `i32`), you should specify the dependency like the following line instead.
+
+```
+[dependencies.coord]
+version = "0.7.0"
+features = ["large_defaults"]
+```
 
 ## FAQ
 

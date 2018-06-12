@@ -2,7 +2,7 @@
 name = "coord"
 version = "0.7.0"
 authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
-description = "A simple, intuitive vector mathematics crate"
+description = "A simple, ergonomic vector mathematics crate"
 license = "MIT"
 readme = "README.md"
 maintenance = { status = "experimental" }
