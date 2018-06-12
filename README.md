@@ -1,6 +1,4 @@
-![Coord](https://imgur.com/qcUMer7.png)
-
-# Coord
+# <img src="https://imgur.com/qcUMer7.png" alt="Coord" width="32px"/> Coord
 
 ---
 
