@@ -110,4 +110,4 @@ Open an issue on Github and I'll fix it as soon as possible.
 
 ## License
 
-Coord is open source software, licensed under the MIT license (LICENSE-MIT or [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT))
+Coord is open source software, licensed under the MIT license (See 'LICENSE' or [http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT))

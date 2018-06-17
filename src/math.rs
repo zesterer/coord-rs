@@ -4,7 +4,7 @@ pub use num::{Num, Integer, Unsigned, Signed, Float};
 use super::{Vector, VecItem};
 
 /// A trait for vectors containing numerical types
-pub trait VecNum<'a>: Vector<'a> where Self::Item: VecItem<'a> + Num {
+pub trait VecNum: Vector where Self::Item: VecItem + Num {
     /// Calculates the sum of all components of the vector
     fn sum(&self) -> Self::Item;
     /// Calculates the produce of all components of the vector
@@ -12,13 +12,13 @@ pub trait VecNum<'a>: Vector<'a> where Self::Item: VecItem<'a> + Num {
 }
 
 /// A trait for vectors containing integer types
-pub trait VecInt<'a>: Vector<'a> where Self::Item: VecItem<'a> + Integer {}
+pub trait VecInt: Vector where Self::Item: VecItem + Integer {}
 
 /// A trait for vectors containing unsigned numerical types
-pub trait VecUnsigned<'a>: Vector<'a> where Self::Item: VecItem<'a> + Unsigned {}
+pub trait VecUnsigned: Vector where Self::Item: VecItem + Unsigned {}
 
 /// A trait for vectors containing signed numerical types
-pub trait VecSigned<'a>: Vector<'a> where Self::Item: VecItem<'a> + Signed {
+pub trait VecSigned: Vector where Self::Item: VecItem + Signed {
     /// Calculates the snake length (also known as 'manhattan distance') of the vector
     ///
     /// *For unsigned vectors, this is identical to the `.sum()` of the vector*
@@ -26,7 +26,7 @@ pub trait VecSigned<'a>: Vector<'a> where Self::Item: VecItem<'a> + Signed {
 }
 
 /// A trait for vectors containing floating point numerical types
-pub trait VecFloat<'a>: Vector<'a> where Self::Item: VecItem<'a> + Float {
+pub trait VecFloat: Vector where Self::Item: VecItem + Float {
     /// Calculates the magnitude of the vector
     fn length(&self) -> Self::Item;
     // Calculates the normalized form of the vector *(i.e: a vector with identical direction but a magnitude of 1)*

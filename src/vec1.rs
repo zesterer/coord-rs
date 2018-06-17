@@ -1,7 +1,6 @@
 //! Functionality pertaining to `Vec1`
 
 use core::ops::{Add, Sub, Mul, Div, AddAssign, SubAssign, MulAssign, DivAssign};
-use core::marker::PhantomData;
 use core::fmt;
 
 #[allow(unused_imports)]
@@ -12,35 +11,33 @@ use super::{Vector, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
 #[cfg(feature = "serialize")]
 #[derive(Copy, Clone, Default, Serialize)]
-pub struct Vec1<'a, T: 'a + VecItem<'a>> {
+pub struct Vec1<T: VecItem> {
     pub x: T,
-    phantom: PhantomData<&'a T>,
 }
 
 #[cfg(not(feature = "serialize"))]
 #[derive(Copy, Clone, Default)]
-pub struct Vec1<'a, T: 'a + VecItem<'a>> {
+pub struct Vec1<T: VecItem> {
     pub x: T,
-    phantom: PhantomData<&'a T>,
 }
 
-impl<'a, T: VecItem<'a>> Vec1<'a, T> {
+impl<T: VecItem> Vec1<T> {
     pub fn new(x: T) -> Self { Self { x, ..Default::default() } }
 }
 
-impl<'a, T: VecItem<'a>> Vector<'a> for Vec1<'a, T> {
+impl<T: VecItem> Vector for Vec1<T> {
     type Item = T;
 }
 
 // Debug and Display traits
 
-impl<'a, T: VecItem<'a> + fmt::Debug> fmt::Debug for Vec1<'a, T> {
+impl<T: VecItem + fmt::Debug> fmt::Debug for Vec1<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "(x: {:?})", self.x)
     }
 }
 
-impl<'a, T: VecItem<'a> + fmt::Display> fmt::Display for Vec1<'a, T> {
+impl<T: VecItem + fmt::Display> fmt::Display for Vec1<T> {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         write!(f, "({})", self.x)
     }
@@ -48,19 +45,19 @@ impl<'a, T: VecItem<'a> + fmt::Display> fmt::Display for Vec1<'a, T> {
 
 // From traits
 
-impl<'a, T: VecItem<'a>> From<T> for Vec1<'a, T> {
+impl<T: VecItem> From<T> for Vec1<T> {
     fn from(item: T) -> Self { Self { x: item, ..Default::default() } }
 }
 
-impl<'a, T: VecItem<'a>> From<[T; 1]> for Vec1<'a, T> {
+impl<T: VecItem> From<[T; 1]> for Vec1<T> {
     fn from(arr: [T; 1]) -> Self { Self { x: arr[0], ..Default::default() } }
 }
 
 // Op traits
 
-impl<'a, T> Add for Vec1<'a, T> where T: VecItem<'a> + Add, T::Output: VecItem<'a> + Add {
-    type Output = Vec1<'a, T::Output>;
-    fn add(self, other: Self) -> Vec1<'a, T::Output> {
+impl<T> Add for Vec1<T> where T: VecItem + Add, T::Output: VecItem + Add {
+    type Output = Vec1<T::Output>;
+    fn add(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
             x: self.x + other.x,
             ..Default::default()
@@ -68,9 +65,9 @@ impl<'a, T> Add for Vec1<'a, T> where T: VecItem<'a> + Add, T::Output: VecItem<'
     }
 }
 
-impl<'a, T> Sub for Vec1<'a, T> where T: VecItem<'a> + Sub, T::Output: VecItem<'a> + Sub {
-    type Output = Vec1<'a, T::Output>;
-    fn sub(self, other: Self) -> Vec1<'a, T::Output> {
+impl<T> Sub for Vec1<T> where T: VecItem + Sub, T::Output: VecItem + Sub {
+    type Output = Vec1<T::Output>;
+    fn sub(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
             x: self.x - other.x,
             ..Default::default()
@@ -78,9 +75,9 @@ impl<'a, T> Sub for Vec1<'a, T> where T: VecItem<'a> + Sub, T::Output: VecItem<'
     }
 }
 
-impl<'a, T> Mul for Vec1<'a, T> where T: VecItem<'a> + Mul, T::Output: VecItem<'a> + Mul {
-    type Output = Vec1<'a, T::Output>;
-    fn mul(self, other: Self) -> Vec1<'a, T::Output> {
+impl<T> Mul for Vec1<T> where T: VecItem + Mul, T::Output: VecItem + Mul {
+    type Output = Vec1<T::Output>;
+    fn mul(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
             x: self.x * other.x,
             ..Default::default()
@@ -88,9 +85,9 @@ impl<'a, T> Mul for Vec1<'a, T> where T: VecItem<'a> + Mul, T::Output: VecItem<'
     }
 }
 
-impl<'a, T> Div for Vec1<'a, T> where T: VecItem<'a> + Div, T::Output: VecItem<'a> + Div {
-    type Output = Vec1<'a, T::Output>;
-    fn div(self, other: Self) -> Vec1<'a, T::Output> {
+impl<T> Div for Vec1<T> where T: VecItem + Div, T::Output: VecItem + Div {
+    type Output = Vec1<T::Output>;
+    fn div(self, other: Self) -> Vec1<T::Output> {
         Vec1 {
             x: self.x / other.x,
             ..Default::default()
@@ -100,9 +97,9 @@ impl<'a, T> Div for Vec1<'a, T> where T: VecItem<'a> + Div, T::Output: VecItem<'
 
 // Op primitive traits
 
-impl<'a, T> Add<T> for Vec1<'a, T> where T: VecItem<'a> + Add, T::Output: VecItem<'a> + Add {
-    type Output = Vec1<'a, T::Output>;
-    fn add(self, other: T) -> Vec1<'a, T::Output> {
+impl<T> Add<T> for Vec1<T> where T: VecItem + Add, T::Output: VecItem + Add {
+    type Output = Vec1<T::Output>;
+    fn add(self, other: T) -> Vec1<T::Output> {
         Vec1 {
             x: self.x + other,
             ..Default::default()
@@ -110,9 +107,9 @@ impl<'a, T> Add<T> for Vec1<'a, T> where T: VecItem<'a> + Add, T::Output: VecIte
     }
 }
 
-impl<'a, T> Sub<T> for Vec1<'a, T> where T: VecItem<'a> + Sub, T::Output: VecItem<'a> + Sub {
-    type Output = Vec1<'a, T::Output>;
-    fn sub(self, other: T) -> Vec1<'a, T::Output> {
+impl<T> Sub<T> for Vec1<T> where T: VecItem + Sub, T::Output: VecItem + Sub {
+    type Output = Vec1<T::Output>;
+    fn sub(self, other: T) -> Vec1<T::Output> {
         Vec1 {
             x: self.x - other,
             ..Default::default()
@@ -120,9 +117,9 @@ impl<'a, T> Sub<T> for Vec1<'a, T> where T: VecItem<'a> + Sub, T::Output: VecIte
     }
 }
 
-impl<'a, T> Mul<T> for Vec1<'a, T> where T: VecItem<'a> + Mul, T::Output: VecItem<'a> + Mul {
-    type Output = Vec1<'a, T::Output>;
-    fn mul(self, other: T) -> Vec1<'a, T::Output> {
+impl<T> Mul<T> for Vec1<T> where T: VecItem + Mul, T::Output: VecItem + Mul {
+    type Output = Vec1<T::Output>;
+    fn mul(self, other: T) -> Vec1<T::Output> {
         Vec1 {
             x: self.x * other,
             ..Default::default()
@@ -130,9 +127,9 @@ impl<'a, T> Mul<T> for Vec1<'a, T> where T: VecItem<'a> + Mul, T::Output: VecIte
     }
 }
 
-impl<'a, T> Div<T> for Vec1<'a, T> where T: VecItem<'a> + Div, T::Output: VecItem<'a> + Div {
-    type Output = Vec1<'a, T::Output>;
-    fn div(self, other: T) -> Vec1<'a, T::Output> {
+impl<T> Div<T> for Vec1<T> where T: VecItem + Div, T::Output: VecItem + Div {
+    type Output = Vec1<T::Output>;
+    fn div(self, other: T) -> Vec1<T::Output> {
         Vec1 {
             x: self.x / other,
             ..Default::default()
@@ -142,7 +139,7 @@ impl<'a, T> Div<T> for Vec1<'a, T> where T: VecItem<'a> + Div, T::Output: VecIte
 
 // Assign operators
 
-impl<'a, T> AddAssign for Vec1<'a, T> where T: VecItem<'a> + Add<Output=T> {
+impl<T> AddAssign for Vec1<T> where T: VecItem + Add<Output=T> {
     fn add_assign(&mut self, other: Self) {
         *self = Vec1 {
             x: self.x + other.x,
@@ -151,7 +148,7 @@ impl<'a, T> AddAssign for Vec1<'a, T> where T: VecItem<'a> + Add<Output=T> {
     }
 }
 
-impl<'a, T> SubAssign for Vec1<'a, T> where T: VecItem<'a> + Sub<Output=T> {
+impl<T> SubAssign for Vec1<T> where T: VecItem + Sub<Output=T> {
     fn sub_assign(&mut self, other: Self) {
         *self = Vec1 {
             x: self.x - other.x,
@@ -160,7 +157,7 @@ impl<'a, T> SubAssign for Vec1<'a, T> where T: VecItem<'a> + Sub<Output=T> {
     }
 }
 
-impl<'a, T> MulAssign for Vec1<'a, T> where T: VecItem<'a> + Mul<Output=T> {
+impl<T> MulAssign for Vec1<T> where T: VecItem + Mul<Output=T> {
     fn mul_assign(&mut self, other: Self) {
         *self = Vec1 {
             x: self.x * other.x,
@@ -169,7 +166,7 @@ impl<'a, T> MulAssign for Vec1<'a, T> where T: VecItem<'a> + Mul<Output=T> {
     }
 }
 
-impl<'a, T> DivAssign for Vec1<'a, T> where T: VecItem<'a> + Div<Output=T> {
+impl<T> DivAssign for Vec1<T> where T: VecItem + Div<Output=T> {
     fn div_assign(&mut self, other: Self) {
         *self = Vec1 {
             x: self.x / other.x,
@@ -180,7 +177,7 @@ impl<'a, T> DivAssign for Vec1<'a, T> where T: VecItem<'a> + Div<Output=T> {
 
 // Assign primitive operators
 
-impl<'a, T> AddAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Add<Output=T> {
+impl<T> AddAssign<T> for Vec1<T> where T: VecItem + Add<Output=T> {
     fn add_assign(&mut self, other: T) {
         *self = Vec1 {
             x: self.x + other,
@@ -189,7 +186,7 @@ impl<'a, T> AddAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Add<Output=T> {
     }
 }
 
-impl<'a, T> SubAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Sub<Output=T> {
+impl<T> SubAssign<T> for Vec1<T> where T: VecItem + Sub<Output=T> {
     fn sub_assign(&mut self, other: T) {
         *self = Vec1 {
             x: self.x - other,
@@ -198,7 +195,7 @@ impl<'a, T> SubAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Sub<Output=T> {
     }
 }
 
-impl<'a, T> MulAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Mul<Output=T> {
+impl<T> MulAssign<T> for Vec1<T> where T: VecItem + Mul<Output=T> {
     fn mul_assign(&mut self, other: T) {
         *self = Vec1 {
             x: self.x * other,
@@ -207,7 +204,7 @@ impl<'a, T> MulAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Mul<Output=T> {
     }
 }
 
-impl<'a, T> DivAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Div<Output=T> {
+impl<T> DivAssign<T> for Vec1<T> where T: VecItem + Div<Output=T> {
     fn div_assign(&mut self, other: T) {
         *self = Vec1 {
             x: self.x / other,
@@ -218,7 +215,7 @@ impl<'a, T> DivAssign<T> for Vec1<'a, T> where T: VecItem<'a> + Div<Output=T> {
 
 // VecNum traits
 
-impl<'a, T> VecNum<'a> for Vec1<'a, T> where T: VecItem<'a> + Num {
+impl<T> VecNum for Vec1<T> where T: VecItem + Num {
     fn sum(&self) -> Self::Item {
         self.x
     }
@@ -230,7 +227,7 @@ impl<'a, T> VecNum<'a> for Vec1<'a, T> where T: VecItem<'a> + Num {
 
 // VecSigned traits
 
-impl<'a, T> VecSigned<'a> for Vec1<'a, T> where T: VecItem<'a> + Signed {
+impl<T> VecSigned for Vec1<T> where T: VecItem + Signed {
     fn snake_length(&self) -> Self::Item {
         self.x.abs()
     }
@@ -238,7 +235,7 @@ impl<'a, T> VecSigned<'a> for Vec1<'a, T> where T: VecItem<'a> + Signed {
 
 // VecFloat traits
 
-impl<'a, T> VecFloat<'a> for Vec1<'a, T> where T: VecItem<'a> + Float {
+impl<T> VecFloat for Vec1<T> where T: VecItem + Float {
     fn length(&self) -> Self::Item {
         self.x
     }

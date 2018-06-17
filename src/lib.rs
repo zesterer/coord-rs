@@ -44,6 +44,7 @@
 //! ```
 
 #![no_std]
+#![feature(alloc)]
 
 extern crate num;
 #[cfg(feature = "serialize")]
@@ -66,32 +67,29 @@ use math::{VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 use serde::{Serialize, Deserialize};
 
 /// A trait implemented by all types that can exist within a vector
-#[cfg(feature = "serialize")]
-pub trait VecItem<'a>: Copy + Clone + Default + PartialEq + Serialize + Deserialize<'a> {}
-#[cfg(not(feature = "serialize"))]
-pub trait VecItem<'a>: Copy + Clone + Default + PartialEq {}
+pub trait VecItem: Copy + Clone + Default + PartialEq {}
 
 /// A trait implemented by all vector types
-pub trait Vector<'a> {
-    type Item: VecItem<'a>;
+pub trait Vector {
+    type Item: VecItem;
 }
 
-impl<'a> VecItem<'a> for bool {}
+impl VecItem for bool {}
 
-impl<'a> VecItem<'a> for u8 {}
-impl<'a> VecItem<'a> for u16 {}
-impl<'a> VecItem<'a> for u32 {}
-impl<'a> VecItem<'a> for u64 {}
-impl<'a> VecItem<'a> for u128 {}
+impl VecItem for u8 {}
+impl VecItem for u16 {}
+impl VecItem for u32 {}
+impl VecItem for u64 {}
+impl VecItem for u128 {}
 
-impl<'a> VecItem<'a> for i8 {}
-impl<'a> VecItem<'a> for i16 {}
-impl<'a> VecItem<'a> for i32 {}
-impl<'a> VecItem<'a> for i64 {}
-impl<'a> VecItem<'a> for i128 {}
+impl VecItem for i8 {}
+impl VecItem for i16 {}
+impl VecItem for i32 {}
+impl VecItem for i64 {}
+impl VecItem for i128 {}
 
-impl<'a> VecItem<'a> for f32 {}
-impl<'a> VecItem<'a> for f64 {}
+impl VecItem for f32 {}
+impl VecItem for f64 {}
 
 #[cfg(not(feature = "large_defaults"))]
 pub mod defaults {
@@ -102,40 +100,40 @@ pub mod defaults {
     use super::*;
 
     /// A 1-dimensional boolean vector type
-    pub type Vec1b<'a> = vec1::Vec1<'a, bool>;
+    pub type Vec1b = vec1::Vec1<bool>;
     /// A 2-dimensional boolean vector type
-    pub type Vec2b<'a> = vec2::Vec2<'a, bool>;
+    pub type Vec2b = vec2::Vec2<bool>;
     /// A 3-dimensional boolean vector type
-    pub type Vec3b<'a> = vec3::Vec3<'a, bool>;
+    pub type Vec3b = vec3::Vec3<bool>;
     /// A 4-dimensional boolean vector type
-    pub type Vec4b<'a> = vec4::Vec4<'a, bool>;
+    pub type Vec4b = vec4::Vec4<bool>;
 
     /// A 1-dimensional unsigned integer vector type
-    pub type Vec1u<'a> = vec1::Vec1<'a, u32>;
+    pub type Vec1u = vec1::Vec1<u32>;
     /// A 2-dimensional unsigned integer vector type
-    pub type Vec2u<'a> = vec2::Vec2<'a, u32>;
+    pub type Vec2u = vec2::Vec2<u32>;
     /// A 3-dimensional unsigned integer vector type
-    pub type Vec3u<'a> = vec3::Vec3<'a, u32>;
+    pub type Vec3u = vec3::Vec3<u32>;
     /// A 4-dimensional unsigned integer vector type
-    pub type Vec4u<'a> = vec4::Vec4<'a, u32>;
+    pub type Vec4u = vec4::Vec4<u32>;
 
     /// A 1-dimensional signed integer vector type
-    pub type Vec1i<'a> = vec1::Vec1<'a, i32>;
+    pub type Vec1i = vec1::Vec1<i32>;
     /// A 2-dimensional signed integer vector type
-    pub type Vec2i<'a> = vec2::Vec2<'a, i32>;
+    pub type Vec2i = vec2::Vec2<i32>;
     /// A 3-dimensional signed integer vector type
-    pub type Vec3i<'a> = vec3::Vec3<'a, i32>;
+    pub type Vec3i = vec3::Vec3<i32>;
     /// A 4-dimensional signed integer vector type
-    pub type Vec4i<'a> = vec4::Vec4<'a, i32>;
+    pub type Vec4i = vec4::Vec4<i32>;
 
     /// A 1-dimensional floating point vector type
-    pub type Vec1f<'a> = vec1::Vec1<'a, f32>;
+    pub type Vec1f = vec1::Vec1<f32>;
     /// A 2-dimensional floating point vector type
-    pub type Vec2f<'a> = vec2::Vec2<'a, f32>;
+    pub type Vec2f = vec2::Vec2<f32>;
     /// A 3-dimensional floating point vector type
-    pub type Vec3f<'a> = vec3::Vec3<'a, f32>;
+    pub type Vec3f = vec3::Vec3<f32>;
     /// A 4-dimensional floating point vector type
-    pub type Vec4f<'a> = vec4::Vec4<'a, f32>;
+    pub type Vec4f = vec4::Vec4<f32>;
 }
 
 #[cfg(feature = "large_defaults")]
@@ -147,40 +145,40 @@ pub mod defaults {
     use super::*;
 
     /// A 1-dimensional boolean vector type
-    pub type Vec1b<'a> = vec1::Vec1<'a, bool>;
+    pub type Vec1b = vec1::Vec1<bool>;
     /// A 2-dimensional boolean vector type
-    pub type Vec2b<'a> = vec2::Vec2<'a, bool>;
+    pub type Vec2b = vec2::Vec2<bool>;
     /// A 3-dimensional boolean vector type
-    pub type Vec3b<'a> = vec3::Vec3<'a, bool>;
+    pub type Vec3b = vec3::Vec3<bool>;
     /// A 4-dimensional boolean vector type
-    pub type Vec4b<'a> = vec4::Vec4<'a, bool>;
+    pub type Vec4b = vec4::Vec4<bool>;
 
     /// A 1-dimensional unsigned integer vector type
-    pub type Vec1u<'a> = vec1::Vec1<'a, u64>;
+    pub type Vec1u = vec1::Vec1<u64>;
     /// A 2-dimensional unsigned integer vector type
-    pub type Vec2u<'a> = vec2::Vec2<'a, u64>;
+    pub type Vec2u = vec2::Vec2<u64>;
     /// A 3-dimensional unsigned integer vector type
-    pub type Vec3u<'a> = vec3::Vec3<'a, u64>;
+    pub type Vec3u = vec3::Vec3<u64>;
     /// A 4-dimensional unsigned integer vector type
-    pub type Vec4u<'a> = vec4::Vec4<'a, u64>;
+    pub type Vec4u = vec4::Vec4<u64>;
 
     /// A 1-dimensional signed integer vector type
-    pub type Vec1i<'a> = vec1::Vec1<'a, i64>;
+    pub type Vec1i = vec1::Vec1<i64>;
     /// A 2-dimensional signed integer vector type
-    pub type Vec2i<'a> = vec2::Vec2<'a, i64>;
+    pub type Vec2i = vec2::Vec2<i64>;
     /// A 3-dimensional signed integer vector type
-    pub type Vec3i<'a> = vec3::Vec3<'a, i64>;
+    pub type Vec3i = vec3::Vec3<i64>;
     /// A 4-dimensional signed integer vector type
-    pub type Vec4i<'a> = vec4::Vec4<'a, i64>;
+    pub type Vec4i = vec4::Vec4<i64>;
 
     /// A 1-dimensional floating point vector type
-    pub type Vec1f<'a> = vec1::Vec1<'a, f64>;
+    pub type Vec1f = vec1::Vec1<f64>;
     /// A 2-dimensional floating point vector type
-    pub type Vec2f<'a> = vec2::Vec2<'a, f64>;
+    pub type Vec2f = vec2::Vec2<f64>;
     /// A 3-dimensional floating point vector type
-    pub type Vec3f<'a> = vec3::Vec3<'a, f64>;
+    pub type Vec3f = vec3::Vec3<f64>;
     /// A 4-dimensional floating point vector type
-    pub type Vec4f<'a> = vec4::Vec4<'a, f64>;
+    pub type Vec4f = vec4::Vec4<f64>;
 }
 
 pub mod prelude {
@@ -342,7 +340,7 @@ mod tests {
         pass_vec4u(vec4!(1, 2, 3, 4));
     }
 
-    fn length_of<'a, V: VecFloat<'a>>(vec: V) -> V::Item where V::Item: math::Float {
+    fn length_of<V: VecFloat>(vec: V) -> V::Item where V::Item: math::Float {
         vec.length()
     }
 
