@@ -370,11 +370,13 @@ mod tests {
         let _v4_2 = vec4![7; 4];
     }
 
+    #[cfg(feature = "serialize")]
     #[test]
     fn serialize() {
         // Nothing yet
     }
 
+    #[cfg(feature = "serialize")]
     #[test]
     fn deserialize() {
         // Nothing yet
