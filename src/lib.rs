@@ -7,6 +7,7 @@
 //! - Basic mathematic operations upon vectors
 //! - Macros that make manipulating vectors simpler
 //! - Vector serialization
+//! - Hash support
 //!
 //! # Coming Soon
 //!

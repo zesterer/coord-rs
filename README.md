@@ -55,6 +55,7 @@ fn main() {
 - [x] Mathematic functions (i.e: `.length()`, `.normalize()`, etc.)
 - [x] Serialization support with the `serialize` feature
 - [x] 64 bit default type support with the `large_defaults` feature
+- [x] Hash support
 
 ## Coming Soon
 

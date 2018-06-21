@@ -10,7 +10,7 @@ use num::{Num, Integer, Unsigned, Signed, Float};
 use super::{Vector, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
 #[cfg(feature = "serialize")]
-#[derive(Copy, Clone, Default, Hash, Serialize, Deserialize)]
+#[derive(Copy, Clone, Default, Hash, Eq, PartialEq, Serialize, Deserialize)]
 pub struct Vec4<T: VecItem> {
     pub x: T,
     pub y: T,
@@ -19,7 +19,7 @@ pub struct Vec4<T: VecItem> {
 }
 
 #[cfg(not(feature = "serialize"))]
-#[derive(Copy, Clone, Default, Hash)]
+#[derive(Copy, Clone, Default, Hash, Eq, PartialEq)]
 pub struct Vec4<T: VecItem> {
     pub x: T,
     pub y: T,
