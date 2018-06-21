@@ -10,7 +10,7 @@ use num::{Num, Integer, Unsigned, Signed, Float};
 use super::{Vector, VecItem, VecNum, VecInt, VecUnsigned, VecSigned, VecFloat};
 
 #[cfg(feature = "serialize")]
-#[derive(Copy, Clone, Default, Serialize, Deserialize)]
+#[derive(Copy, Clone, Default, Hash, Serialize, Deserialize)]
 pub struct Vec4<T: VecItem> {
     pub x: T,
     pub y: T,
@@ -19,7 +19,7 @@ pub struct Vec4<T: VecItem> {
 }
 
 #[cfg(not(feature = "serialize"))]
-#[derive(Copy, Clone, Default)]
+#[derive(Copy, Clone, Default, Hash)]
 pub struct Vec4<T: VecItem> {
     pub x: T,
     pub y: T,
@@ -28,7 +28,11 @@ pub struct Vec4<T: VecItem> {
 }
 
 impl<T: VecItem> Vec4<T> {
+    /// Creates a new Vec3 from multiple components
     pub fn new(x: T, y: T, z: T, w: T) -> Self { Self { x, y, z, w, ..Default::default() } }
+
+    /// Returns the elements of the vector as an array
+    pub fn elements(&self) -> [T; 4] { [self.x, self.y, self.z, self.w] }
 }
 
 impl<T: VecItem> Vector for Vec4<T> {
