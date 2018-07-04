@@ -242,6 +242,16 @@ impl<T> VecNum for Vec1<T> where T: VecItem + Num {
     }
 }
 
+// VecInt traits
+
+impl<T> VecInt for Vec1<T> where T: VecItem + Integer {
+    fn div_euc(&self, other: Self) -> Self {
+        Self {
+            x: self.x.div_floor(&other.x),
+        }
+    }
+}
+
 // VecSigned traits
 
 impl<T> VecSigned for Vec1<T> where T: VecItem + Signed {

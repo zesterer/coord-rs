@@ -58,6 +58,7 @@ fn main() {
 - [x] Hash support
 - [x] `.map()` method performing arbitrary element-wise vector transformation
 - [x] `.convert_to()` method allowing element-wise vector conversion
+- [x] `.div_floor()` method allowing floor-like vector division
 
 ## Coming Soon
 
@@ -70,7 +71,7 @@ fn main() {
 To use Coord in your Rust project, add the following line beneath the `[dependencies]` section in your `Cargo.toml` file.
 
 ```
-coord = "0.10.0"
+coord = "0.10.1"
 ```
 
 If you want to enable serialization or 64-bit defaults, you should specify the dependency like the following line instead.

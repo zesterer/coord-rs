@@ -47,6 +47,8 @@
 #![no_std]
 #![feature(alloc)]
 
+#![feature(euclidean_division)]
+
 extern crate num;
 #[cfg(feature = "serialize")]
 #[macro_use]

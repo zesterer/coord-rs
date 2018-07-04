@@ -12,7 +12,10 @@ pub trait VecNum: Vector where Self::Item: VecItem + Num {
 }
 
 /// A trait for vectors containing integer types
-pub trait VecInt: Vector where Self::Item: VecItem + Integer {}
+pub trait VecInt: Vector where Self::Item: VecItem + Integer {
+    /// Performs a Eucledian division (i.e: rounds towards negative infinity) operation upon the vector
+    fn div_euc(&self, other: Self) -> Self;
+}
 
 /// A trait for vectors containing unsigned numerical types
 pub trait VecUnsigned: Vector where Self::Item: VecItem + Unsigned {}

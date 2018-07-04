@@ -1,6 +1,6 @@
 [package]
 name = "coord"
-version = "0.10.0"
+version = "0.10.1"
 authors = ["Joshua Barretto <joshua.s.barretto@gmail.com>"]
 description = "A simple, ergonomic vector mathematics crate"
 license = "MIT"
