@@ -27,6 +27,19 @@ impl<T: VecItem> Vec1<T> {
 
     /// Returns the elements of the vector as an array
     pub fn elements(&self) -> [T; 1] { [self.x] }
+
+    /// Apply an operation to all elements of this vector, returning the result
+    pub fn map<U: VecItem, F: Fn(T) -> U>(&self, f: F) -> Vec1<U> {
+        Vec1 {
+            x: f(self.x),
+        }
+    }
+
+    pub fn convert_to<U: VecItem + From<T>>(&self) -> Vec1<U> {
+        Vec1 {
+            x: U::from(self.x),
+        }
+    }
 }
 
 impl<T: VecItem> Vector for Vec1<T> {

@@ -33,6 +33,25 @@ impl<T: VecItem> Vec4<T> {
 
     /// Returns the elements of the vector as an array
     pub fn elements(&self) -> [T; 4] { [self.x, self.y, self.z, self.w] }
+
+    /// Apply an operation to all elements of this vector, returning the result
+    pub fn map<U: VecItem, F: Fn(T) -> U>(&self, f: F) -> Vec4<U> {
+        Vec4 {
+            x: f(self.x),
+            y: f(self.y),
+            z: f(self.z),
+            w: f(self.w),
+        }
+    }
+
+    pub fn convert_to<U: VecItem + From<T>>(&self) -> Vec4<U> {
+        Vec4 {
+            x: U::from(self.x),
+            y: U::from(self.y),
+            z: U::from(self.z),
+            w: U::from(self.w),
+        }
+    }
 }
 
 impl<T: VecItem> Vector for Vec4<T> {

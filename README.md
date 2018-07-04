@@ -56,6 +56,8 @@ fn main() {
 - [x] Serialization support with the `serialize` feature
 - [x] 64 bit default type support with the `large_defaults` feature
 - [x] Hash support
+- [x] `.map()` method performing arbitrary element-wise vector transformation
+- [x] `.convert_to()` method allowing element-wise vector conversion
 
 ## Coming Soon
 
@@ -68,7 +70,7 @@ fn main() {
 To use Coord in your Rust project, add the following line beneath the `[dependencies]` section in your `Cargo.toml` file.
 
 ```
-coord = "0.7.0"
+coord = "0.10.0"
 ```
 
 If you want to enable serialization or 64-bit defaults, you should specify the dependency like the following line instead.
