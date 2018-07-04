@@ -267,9 +267,21 @@ impl<T> VecFloat for Vec1<T> where T: VecItem + Float {
         self.x
     }
 
-    fn normalize(&self) -> Self {
+    fn norm(&self) -> Self {
         Vec1::new(
             self.x,
         )
+    }
+
+    fn floor(&self) -> Self {
+        self.map(|e| e.floor())
+    }
+
+    fn ceil(&self) -> Self {
+        self.map(|e| e.ceil())
+    }
+
+    fn round(&self) -> Self {
+        self.map(|e| e.round())
     }
 }

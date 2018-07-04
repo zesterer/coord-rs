@@ -330,7 +330,7 @@ impl<T> VecFloat for Vec4<T> where T: VecItem + Float {
         (self.x * self.x + self.y * self.y + self.z * self.z + self.w * self.w).sqrt()
     }
 
-    fn normalize(&self) -> Self {
+    fn norm(&self) -> Self {
         let len = self.length();
         Vec4::new(
             self.x / len,
@@ -338,5 +338,17 @@ impl<T> VecFloat for Vec4<T> where T: VecItem + Float {
             self.z / len,
             self.w / len,
         )
+    }
+
+    fn floor(&self) -> Self {
+        self.map(|e| e.floor())
+    }
+
+    fn ceil(&self) -> Self {
+        self.map(|e| e.ceil())
+    }
+
+    fn round(&self) -> Self {
+        self.map(|e| e.round())
     }
 }

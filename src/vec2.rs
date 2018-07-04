@@ -288,11 +288,23 @@ impl<T> VecFloat for Vec2<T> where T: VecItem + Float {
         (self.x * self.x + self.y * self.y).sqrt()
     }
 
-    fn normalize(&self) -> Self {
+    fn norm(&self) -> Self {
         let len = self.length();
         Vec2::new(
             self.x / len,
             self.y / len,
         )
+    }
+
+    fn floor(&self) -> Self {
+        self.map(|e| e.floor())
+    }
+
+    fn ceil(&self) -> Self {
+        self.map(|e| e.ceil())
+    }
+
+    fn round(&self) -> Self {
+        self.map(|e| e.round())
     }
 }

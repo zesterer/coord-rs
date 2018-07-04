@@ -309,12 +309,24 @@ impl<T> VecFloat for Vec3<T> where T: VecItem + Float {
         (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
     }
 
-    fn normalize(&self) -> Self {
+    fn norm(&self) -> Self {
         let len = self.length();
         Vec3::new(
             self.x / len,
             self.y / len,
             self.z / len,
         )
+    }
+
+    fn floor(&self) -> Self {
+        self.map(|e| e.floor())
+    }
+
+    fn ceil(&self) -> Self {
+        self.map(|e| e.ceil())
+    }
+
+    fn round(&self) -> Self {
+        self.map(|e| e.round())
     }
 }

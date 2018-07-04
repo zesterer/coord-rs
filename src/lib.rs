@@ -33,7 +33,7 @@
 //!
 //! 	// Coord implements many common mathematic functions
 //! 	let _ = v.length();
-//! 	let _ = v.normalize();
+//! 	let _ = v.norm();
 //!
 //! 	// Coord supports debug and display printing of vectors
 //! 	println!("Debug => {:?}", v);

@@ -33,7 +33,7 @@ fn main() {
 
 	// Coord implements many common mathematic functions
 	let _ = v.length();
-	let _ = v.normalize();
+	let _ = v.norm();
 
 	// Coord supports debug and display printing of vectors
 	println!("Debug => {:?}", v);
@@ -52,7 +52,7 @@ fn main() {
 - [x] Utility macros to make vector manipulation simpler
 - [x] `VecXu`, `VecXi` and `VecXf` default type definitions
 - [x] Basic mathematic operations (`Add`, `Sub`, `Mul`, `Div`)
-- [x] Mathematic functions (i.e: `.length()`, `.normalize()`, etc.)
+- [x] Mathematic functions (i.e: `.length()`, `.norm()`, etc.)
 - [x] Serialization support with the `serialize` feature
 - [x] 64 bit default type support with the `large_defaults` feature
 - [x] Hash support
@@ -71,7 +71,7 @@ fn main() {
 To use Coord in your Rust project, add the following line beneath the `[dependencies]` section in your `Cargo.toml` file.
 
 ```
-coord = "0.10.1"
+coord = "0.11.0"
 ```
 
 If you want to enable serialization or 64-bit defaults, you should specify the dependency like the following line instead.

@@ -32,6 +32,15 @@ pub trait VecSigned: Vector where Self::Item: VecItem + Signed {
 pub trait VecFloat: Vector where Self::Item: VecItem + Float {
     /// Calculates the magnitude of the vector
     fn length(&self) -> Self::Item;
-    // Calculates the normalized form of the vector *(i.e: a vector with identical direction but a magnitude of 1)*
-    fn normalize(&self) -> Self;
+    /// Calculates the normalized form of the vector *(i.e: a vector with identical direction but a magnitude of 1)*
+    fn norm(&self) -> Self;
+
+    /// Rounds each element of the vector down to the nearest whole number
+    fn floor(&self) -> Self;
+
+    /// Rounds each element of the vector up to the nearest whole number
+    fn ceil(&self) -> Self;
+
+    /// Rounds each element of the vector to the nearest whole number
+    fn round(&self) -> Self;
 }
