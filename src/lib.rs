@@ -345,7 +345,7 @@ mod tests {
     }
 
     #[test]
-    fn dot_product_vec2(){
+    fn dot_product_vec2i(){
         let zero = vec2!(0, 0);
         let one = vec2!(1, 1);
         let right = vec2!(1, 0);
@@ -360,18 +360,23 @@ mod tests {
     }
 
     #[test]
-    fn dot_product_vec3(){
-        let zero = vec3!(0, 0, 0);
-        let one = vec3!(1, 1, 1);
-        let right = vec3!(1, 0, 0);
-        let left = vec3!(-1, 0, 0);
-        let up = vec3!(0, 1, 0);
+    fn dot_product_vec3f(){
+        let zero = vec3!(0.0, 0.0, 0.0);
+        let one = vec3!(1.0, 1.0, 1.0);
+        let right = vec3!(1.0, 0.0, 0.0);
+        let left = vec3!(-1.0, 0.0, 0.0);
+        let up = vec3!(0.0, 1.0, 0.0);
 
-        assert_eq!(zero.dot(zero), 0);
-        assert_eq!(one.dot(one), 3);
-        assert_eq!(right.dot(up), 0);
-        assert_eq!(right.dot(right), 1);
-        assert_eq!(right.dot(left), -1);
+        /// floating point equality
+        fn f_eq(a: f64, b: f64) -> bool {
+            (b - a).abs() < 0.01
+        }
+
+        assert!(f_eq(zero.dot(zero), 0.0));
+        assert!(f_eq(one.dot(one), 3.0));
+        assert!(f_eq(right.dot(up), 0.0));
+        assert!(f_eq(right.dot(right), 1.0));
+        assert!(f_eq(right.dot(left), -1.0));
     }
 
     fn length_of<V: VecFloat>(vec: V) -> V::Item where V::Item: math::Float {
