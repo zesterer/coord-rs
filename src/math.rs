@@ -7,9 +7,28 @@ use super::{Vector, VecItem};
 pub trait VecNum: Vector where Self::Item: VecItem + Num {
     /// Calculates the sum of all components of the vector
     fn sum(&self) -> Self::Item;
-    /// Calculates the produce of all components of the vector
+
+    /// Calculates the product of all components of the vector
     fn product(&self) -> Self::Item;
+
 }
+
+
+
+/// Trait for vectors that support a dot-product
+pub trait VecDot: Vector where Self::Item: VecItem + Num {
+    /// calculates the dot product of the two vectors
+    fn dot(&self, other: Self) -> Self::Item;
+}
+
+/// Default implement the dot product for all numeric vectors
+impl<V> VecDot for V where V: Sized + Copy + VecNum + ::core::ops::Mul<Output=V>, V::Item: VecItem + Num {
+    fn dot(&self, other: Self) -> Self::Item {
+        (*self * other).sum()
+    }
+}
+
+
 
 /// A trait for vectors containing integer types
 pub trait VecInt: Vector where Self::Item: VecItem + Integer {
