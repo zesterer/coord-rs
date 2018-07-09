@@ -204,6 +204,7 @@ pub mod prelude {
     pub use super::vec4::Vec4;
 
     pub use math::VecNum;
+    pub use math::VecDot;
     pub use math::VecInt;
     pub use math::VecUnsigned;
     pub use math::VecSigned;
@@ -341,6 +342,41 @@ mod tests {
         pass_vec2u(vec2!(1, 2));
         pass_vec3u(vec3!(1, 2, 3));
         pass_vec4u(vec4!(1, 2, 3, 4));
+    }
+
+    #[test]
+    fn dot_product_vec2i(){
+        let zero = vec2!(0, 0);
+        let one = vec2!(1, 1);
+        let right = vec2!(1, 0);
+        let left = vec2!(-1, 0);
+        let up = vec2!(0, 1);
+
+        assert_eq!(zero.dot(zero), 0);
+        assert_eq!(one.dot(one), 2);
+        assert_eq!(right.dot(up), 0);
+        assert_eq!(right.dot(right), 1);
+        assert_eq!(right.dot(left), -1);
+    }
+
+    #[test]
+    fn dot_product_vec3f(){
+        let zero = vec3!(0.0, 0.0, 0.0);
+        let one = vec3!(1.0, 1.0, 1.0);
+        let right = vec3!(1.0, 0.0, 0.0);
+        let left = vec3!(-1.0, 0.0, 0.0);
+        let up = vec3!(0.0, 1.0, 0.0);
+
+        /// floating point equality
+        fn f_eq(a: f64, b: f64) -> bool {
+            (b - a).abs() < 0.01
+        }
+
+        assert!(f_eq(zero.dot(zero), 0.0));
+        assert!(f_eq(one.dot(one), 3.0));
+        assert!(f_eq(right.dot(up), 0.0));
+        assert!(f_eq(right.dot(right), 1.0));
+        assert!(f_eq(right.dot(left), -1.0));
     }
 
     fn length_of<V: VecFloat>(vec: V) -> V::Item where V::Item: math::Float {
