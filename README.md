@@ -1,3 +1,5 @@
+# `coord` is deprecated. I recommend using [`vek`](https://github.com/yoanlcq/vek), a project with near-identical aims instead.
+
 # <img src="https://imgur.com/qcUMer7.png" alt="Coord" width="32px"/> Coord
 
 [![Build Status][ci-badge]][ci] [![Crates.io][cr-badge]][cr] ![Downloads][dl-badge] [![Docs][doc-badge]][doc]
